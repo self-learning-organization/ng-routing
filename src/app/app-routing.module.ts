@@ -11,17 +11,23 @@ import { AuthGuard } from "./auth-guard.service";
 
 const appRoutes: Routes = [
     { path: '', redirectTo: '/home', pathMatch: 'full' },
-    { path: 'home', component: HomeComponent },                 // localhost:4200
-    { path: 'users', component: UsersComponent, children: [     // localhost:4200/users
-      { path: ':id/:name', component: UserComponent },          // localhost:4200/users/<id>/<name>
+    { path: 'home', component: HomeComponent },                     // localhost:4200
+    { path: 'users', component: UsersComponent, children: [         // localhost:4200/users
+      { path: ':id/:name', component: UserComponent },              // localhost:4200/users/<id>/<name>
     ]},   
-    { path: 'servers', canActivate: [AuthGuard], component: ServersComponent, children: [ // localhost:4200/servers
-      { path: ':id', component: ServerComponent },              // localhost:4200/servers/<id>
-      { path: ':id/edit', component: EditServerComponent }      // localhost:4200/servers/<id>/edit
-    ]}, 
+    { 
+        path: 'servers', 
+        // canActivate: [AuthGuard], 
+        canActivateChild: [AuthGuard],
+        component: ServersComponent, 
+        children: [                                                 // localhost:4200/servers
+            { path: ':id', component: ServerComponent },            // localhost:4200/servers/<id>
+            { path: ':id/edit', component: EditServerComponent }    // localhost:4200/servers/<id>/edit
+        ]
+    }, 
     { path: 'not-found', component: PageNotFoundComponent },
-    { path: '**', redirectTo: '/not-found' }                    // Wildcard route, catches all paths we don't know. 
-                                                                // And list this last because routes get parsed top to bottom
+    { path: '**', redirectTo: '/not-found' }                        // Wildcard route, catches all paths we don't know. 
+                                                                    // And list this last because routes get parsed top to bottom
   ];
 
 @NgModule({
