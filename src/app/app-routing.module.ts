@@ -9,6 +9,7 @@ import { EditServerComponent } from "./servers/edit-server/edit-server.component
 import { PageNotFoundComponent } from "./page-not-found/page-not-found.component";
 import { AuthGuard } from "./auth-guard.service";
 import { CanDeactivateGuard } from "./servers/edit-server/can-deactivate-guard.service";
+import { ErrorPageComponent } from "./error-page/error-page.component";
 
 const appRoutes: Routes = [
     { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -30,7 +31,8 @@ const appRoutes: Routes = [
             }                                                       // localhost:4200/servers/<id>/edit
         ]
     }, 
-    { path: 'not-found', component: PageNotFoundComponent },
+    // { path: 'not-found', component: PageNotFoundComponent },
+    { path: 'not-found', component: ErrorPageComponent, data: {message: 'Page not found!'} },
     { path: '**', redirectTo: '/not-found' }                        // Wildcard route, catches all paths we don't know. 
                                                                     // And list this last because routes get parsed top to bottom
   ];
